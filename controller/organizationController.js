@@ -2,40 +2,132 @@ const Organization = require("../database/model/organization");
 
 // add organization
 exports.addOrganization = async (req, res) => {
-    console.log("add Organization :", req.body);
-    try {
-      const { companyName, companyEmail } = req.body;
-  
-      // Check if an organization with the same companyName already exists
-      const existingOrganization = await Organization.findOne({ companyName });
-  
-      if (existingOrganization) {
-        return res.status(409).json({
-          message: "Organization with the provided companyName already exists.",
-        });
-      }
-  
-      // Create a new organization
-      const newOrganization = new Organization({
-        companyName,
-        companyEmail,
-        ...req.body // Spread other properties from the request body
+  console.log("add Organization:", req.body);
+  try {
+    const {
+      organizationId,
+      organizationLogo,
+      organizationName,
+      organizationCountry,
+      organizationIndustry,
+
+      addline1,
+      addline2,
+      city,
+      pincode,
+      state,
+
+      organizationPhNum,
+      website,
+      baseCurrency,
+      fiscalYear,
+      reportBasis,
+      language,
+      timeZone,
+      dateFormat,
+      dateSplit,
+      companyId,
+      companyIdField,
+      taxId,
+      taxIdField,
+      qrLocation,
+      qrSignature,
+      twitter,
+      insta,
+      linkedin,
+      facebook,
+      
+      addfield,
+
+      accountHolderName,
+      bankName,
+      accNum,
+      ifsc,
+    } = req.body;
+
+    // Check if an organization with the same organizationName already exists
+    const existingOrganization = await Organization.findOne({ organizationName });
+
+    if (existingOrganization) {
+      return res.status(409).json({
+        message: "Organization with the provided organizationName already exists.",
       });
-  
-      // Save the new organization to the database
-      const savedOrganization = await newOrganization.save();
-  
-      // Respond with a success message and the newly created organization
-      res.status(201).json({
-        message: "Organization created successfully.",
-        organization: savedOrganization,
-      });
-      console.log("Organization created successfully:", savedOrganization);
-    } catch (error) {
-      console.error("Error creating Organization:", error);
-      res.status(500).json({ message: "Internal server error." });
     }
-  };
+
+    // Create a new organization
+    const newOrganization = new Organization({
+      organizationId,
+      organizationLogo,
+      organizationName,
+      organizationCountry,
+      organizationIndustry,
+      organizationPhNum,
+      website,
+      baseCurrency,
+      fiscalYear,
+      reportBasis,
+      language,
+      timeZone,
+      dateFormat,
+      dateSplit,
+      companyId,
+      companyIdField,
+      taxId,
+      taxIdField,
+      qrLocation,
+      qrSignature,
+      twitter,
+      insta,
+      linkedin,
+      facebook,
+
+      addline1,
+      addline2,
+      city,
+      pincode,
+      state,
+
+      accountHolderName,
+      bankName,
+      accNum,
+      ifsc,
+
+      // address: address.map((addr) => ({
+      //   addline1: addr.addline1,
+      //   addline2: addr.addline2,
+      //   city: addr.city,
+      //   pincode: addr.pincode,
+      //   state: addr.state,
+      // })),
+
+      addfield: addfield.map((field) => ({
+        label: field.label,
+        value: field.value,
+      })),
+      // bankfield: bankfield.map((bank) => ({
+      //   accountHolderName: bank.accountHolderName,
+      //   bankName: bank.bankName,
+      //   accNum: bank.accNum,
+      //   ifsc: bank.ifsc,
+      // })),
+      
+    });
+
+    // Save the new organization to the database
+    const savedOrganization = await newOrganization.save();
+
+    // Respond with a success message and the newly created organization
+    res.status(201).json({
+      message: "Organization created successfully.",
+      organization: savedOrganization,
+    });
+    console.log("Organization created successfully:", savedOrganization);
+  } catch (error) {
+    console.error("Error creating Organization:", error);
+    res.status(500).json({ message: "Internal server error." });
+  }
+};
+
 
 // get organozations
 exports.getOrganization = async (req, res) => {
@@ -52,6 +144,9 @@ exports.getOrganization = async (req, res) => {
     res.status(500).json("Internal server error");
   }
 };
+
+
+
 
 // edit organizations
 exports.updateOrganization = async (req, res) => {
@@ -81,6 +176,8 @@ exports.updateOrganization = async (req, res) => {
       res.status(500).json({ message: "Internal server error" });
     }
   };
+
+
 
 // delete Organization
 exports.deleteOrganization = async (req, res) => {
