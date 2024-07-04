@@ -129,8 +129,8 @@ exports.addOrganization = async (req, res) => {
 };
 
 
-// get organozations
-exports.getOrganization = async (req, res) => {
+// get all organozations
+exports.getAllOrganization = async (req, res) => {
   try {
     const allOrganizations = await Organization.find();
 
@@ -145,37 +145,129 @@ exports.getOrganization = async (req, res) => {
   }
 };
 
+// get one organization
+exports.getOneOrganization = async (req, res) => {
+  try {
+    const { _id } = req.params;
+
+    // Log the ID being fetched
+    console.log("Fetching organization with ID:", _id);
+
+    const organization = await Organization.findById(_id);
+
+    if (organization) {
+      res.status(200).json(organization);
+    } else {
+      res.status(404).json({ message: "Organization not found" });
+    }
+  } catch (error) {
+    console.error("Error fetching organization:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
+
 
 
 
 // edit organizations
 exports.updateOrganization = async (req, res) => {
-    console.log("update Organization :", req.body);
-    try {
-      const { _id, companyName, companyEmail } = req.body;
+  console.log("Received request to update organization:", req.body);
   
+  try {
+      const {
+          _id,
+          organizationId,
+          organizationLogo,
+          organizationName,
+          organizationCountry,
+          organizationIndustry,
+          addline1,
+          addline2,
+          city,
+          pincode,
+          state,
+          organizationPhNum,
+          website,
+          baseCurrency,
+          fiscalYear,
+          reportBasis,
+          language,
+          timeZone,
+          dateFormat,
+          dateSplit,
+          companyId,
+          companyIdField,
+          taxId,
+          taxIdField,
+          qrLocation,
+          qrSignature,
+          twitter,
+          insta,
+          linkedin,
+          facebook,
+          addfield,
+          accountHolderName,
+          bankName,
+          accNum,
+          ifsc,
+      } = req.body;
+      
+      // Log the ID being updated
+      console.log("Updating organization with ID:", _id);
+
       const updatedOrganization = await Organization.findByIdAndUpdate(
-        _id,
-        {
-          companyName,
-          companyEmail
-        },
-        { new: true, runValidators: true }
+          _id,
+          {
+              organizationId,
+              organizationLogo,
+              organizationName,
+              organizationCountry,
+              organizationIndustry,
+              addline1,
+              addline2,
+              city,
+              pincode,
+              state,
+              organizationPhNum,
+              website,
+              baseCurrency,
+              fiscalYear,
+              reportBasis,
+              language,
+              timeZone,
+              dateFormat,
+              dateSplit,
+              companyId,
+              companyIdField,
+              taxId,
+              taxIdField,
+              qrLocation,
+              qrSignature,
+              twitter,
+              insta,
+              linkedin,
+              facebook,
+              addfield,
+              accountHolderName,
+              bankName,
+              accNum,
+              ifsc
+          },
+          { new: true, runValidators: true }
       );
-  
+
       if (!updatedOrganization) {
-        return res.status(404).json({
-          message: "Organization not found",
-        });
+          console.log("Organization not found with ID:", _id);
+          return res.status(404).json({ message: "Organization not found" });
       }
-  
+
       res.status(200).json({ message: "Organization updated successfully" });
-      console.log("Organization updated successfully");
-    } catch (error) {
-      console.error("Error updating Organization:", error);
+      console.log("Organization updated successfully:", updatedOrganization);
+  } catch (error) {
+      console.error("Error updating organization:", error);
       res.status(500).json({ message: "Internal server error" });
-    }
-  };
+  }
+};
 
 
 
