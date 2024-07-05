@@ -9,7 +9,9 @@ const cors = require('cors')
 //create server app using express
 const server = express()
 
-const router = require("./router/organizationRouter")
+const organizationRouter = require("./router/organizationRouter")
+const accountRouter = require("./router/accountRouter")
+
 
 require('./database/connection/connection')
 //use cors and express.json() to your server app  (application specific middleware)
@@ -17,7 +19,7 @@ server.use(cors())
 
 server.use(express.json())
 
-server.use(router)
+server.use(organizationRouter,accountRouter)
 
 //create port to  listen your server app
 PORT = 3000
