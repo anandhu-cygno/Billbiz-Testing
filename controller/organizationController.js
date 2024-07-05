@@ -1,4 +1,92 @@
 const Organization = require("../database/model/organization");
+const Account = require("../database/model/account")
+
+const accounts = [
+  { accountName: "Advance Tax", accountType: "Assets", accountHeads: "Current Assets" },
+  { accountName: "Advertising & Promotion", accountType: "Indirect Expenses", accountHeads: "Indirect Expenses" },
+  { accountName: "Bad Debts Written Off", accountType: "Indirect Expenses", accountHeads: "Indirect Expenses" },
+  { accountName: "Balance Written Off", accountType: "Indirect Expenses", accountHeads: "Indirect Income" },
+  { accountName: "Bank Charges", accountType: "Indirect Expenses", accountHeads: "Indirect Expenses" },
+  { accountName: "Bills Receivable", accountType: "Assets", accountHeads: "Current Assets" },
+  { accountName: "Building", accountType: "Assets", accountHeads: "Fixed Assets" },
+  { accountName: "Cash", accountType: "Assets", accountHeads: "Cash-in-hand" },
+  { accountName: "Charity & Donations", accountType: "Indirect Expenses", accountHeads: "Indirect Expenses" },
+  { accountName: "Computer", accountType: "Assets", accountHeads: "Fixed Assets" },
+  { accountName: "Consultant Expenses", accountType: "Indirect Expenses", accountHeads: "Indirect Expenses" },
+  { accountName: "Customs Duty Payable", accountType: "Direct Expenses", accountHeads: "Direct Expenses" },
+  { accountName: "Depreciation Expenses", accountType: "Indirect Expenses", accountHeads: "Indirect Expenses" },
+  { accountName: "Employee Advance", accountType: "Assets", accountHeads: "Current Assets" },
+  { accountName: "Forex Gain/Loss", accountType: "Indirect Expenses", accountHeads: "Indirect Expenses" },
+  { accountName: "Freight Charges", accountType: "Direct Income", accountHeads: "Direct Income" },
+  { accountName: "Fuel Expenses", accountType: "Indirect Expenses", accountHeads: "Indirect Expenses" },
+  { accountName: "Furniture and Fittings", accountType: "Assets", accountHeads: "Fixed Assets" },
+  { accountName: "General Expenses", accountType: "Indirect Expenses", accountHeads: "Indirect Expenses" },
+  { accountName: "Housekeeping Charges", accountType: "Indirect Expenses", accountHeads: "Indirect Expenses" },
+  { accountName: "Insurance Charges", accountType: "Direct Income", accountHeads: "Direct Income" },
+  { accountName: "Insurance Expenses", accountType: "Indirect Expenses", accountHeads: "Indirect Expenses" },
+  { accountName: "Interest on Loan", accountType: "Indirect Expenses", accountHeads: "Indirect Expenses" },
+  { accountName: "IT and Internet Expenses", accountType: "Indirect Expenses", accountHeads: "Indirect Expenses" },
+  { accountName: "Land", accountType: "Assets", accountHeads: "Fixed Assets" },
+  { accountName: "Machinery", accountType: "Assets", accountHeads: "Fixed Assets" },
+  { accountName: "Miscellaneous Expenses", accountType: "Indirect Expenses", accountHeads: "Indirect Expenses" },
+  { accountName: "Output CGST 9%", accountType: "Liabilities", accountHeads: "Duties & Taxes" },
+  { accountName: "Output SGST 9%", accountType: "Liabilities", accountHeads: "Duties & Taxes" },
+  { accountName: "Packing and Forwarding Charges", accountType: "Direct Income", accountHeads: "Direct Income" },
+  { accountName: "Postal Expenses", accountType: "Indirect Expenses", accountHeads: "Indirect Expenses" },
+  { accountName: "Prepaid Expense", accountType: "Assets", accountHeads: "Current Assets" },
+  { accountName: "Printing & Stationery", accountType: "Indirect Expenses", accountHeads: "Indirect Expenses" },
+  { accountName: "Profit and Loss", accountType: "Liabilities", accountHeads: "Capital Account" },
+  { accountName: "Purchase", accountType: "Indirect Expenses", accountHeads: "Purchase" },
+  { accountName: "Purchase Return", accountType: "Purchase", accountHeads: "Purchase" },
+  { accountName: "Rent Expenses", accountType: "Indirect Expenses", accountHeads: "Indirect Expenses" },
+  { accountName: "Repairs and Maintenance", accountType: "Indirect Expenses", accountHeads: "Indirect Expenses" },
+  { accountName: "Round Off", accountType: "Indirect Expenses", accountHeads: "Indirect Expenses" },
+  { accountName: "Salary", accountType: "Indirect Expenses", accountHeads: "Indirect Expenses" },
+  { accountName: "Sales", accountType: "Sales", accountHeads: "Sales" },
+  { accountName: "Sales Return", accountType: "Sales", accountHeads: "Sales" },
+  { accountName: "Staff Welfare Expenses", accountType: "Indirect Expenses", accountHeads: "Indirect Expenses" },
+  { accountName: "Sundry Creditors", accountType: "Sundry Creditors", accountHeads: "Sundry Creditors" },
+  { accountName: "Sundry Debtors", accountType: "Sundry Debtors", accountHeads: "Sundry Debtors" },
+  { accountName: "TDS Payable", accountType: "Liabilities", accountHeads: "Current Liabilities" },
+  { accountName: "TDS Receivable", accountType: "Assets", accountHeads: "Current Assets" },
+  { accountName: "Telephone Expenses", accountType: "Indirect Expenses", accountHeads: "Indirect Expenses" },
+  { accountName: "Travel Expense", accountType: "Indirect Expenses", accountHeads: "Indirect Expenses" },
+  { accountName: "Undeposited Funds", accountType: "Assets", accountHeads: "Current Assets" },
+  { accountName: "Vehicle", accountType: "Assets", accountHeads: "Fixed Assets" },
+  { accountName: "Wages", accountType: "Direct Expenses", accountHeads: "Direct Expenses" },
+  { accountName: "Water & Electricity Expenses", accountType: "Indirect Expenses", accountHeads: "Indirect Expenses" },
+  { accountName: "walk in customer", accountType: "Current Assets", accountHeads: "Sundry Debtors" }
+];
+
+async function insertAccounts(accounts,organizationId) {
+
+  const accountDocuments = accounts.map(account => {
+    const currentDate = new Date();
+    const day = String(currentDate.getDate()).padStart(2, '0');
+    const month = String(currentDate.getMonth() + 1).padStart(2, '0'); 
+    const year = currentDate.getFullYear();
+    const formattedDate = `${day}-${month}-${year}`;
+
+    return {
+        organizationId: organizationId, 
+        accountId: "", 
+        accountName: account.accountName,
+        accountCode: "",  
+        accountType: account.accountType,
+        accountHeads: account.accountHeads,
+        openingBalance: 0, 
+        openingBalanceDate: formattedDate, 
+        description: "" 
+    };
+});
+
+  try {
+      await Account.insertMany(accountDocuments);
+      console.log('Accounts created successfully');
+  } catch (error) {
+      console.error('Error inserting accounts:', error);
+  }
+}
 
 // add organization
 exports.addOrganization = async (req, res) => {
@@ -113,15 +201,16 @@ exports.addOrganization = async (req, res) => {
       
     });
 
-    // Save the new organization to the database
+    
     const savedOrganization = await newOrganization.save();
 
-    // Respond with a success message and the newly created organization
+    
     res.status(201).json({
-      message: "Organization created successfully.",
-      organization: savedOrganization,
+      message: "Organization created successfully."
+      // organization: savedOrganization,
     });
-    console.log("Organization created successfully:", savedOrganization);
+    console.log("Organization created successfully:");
+    insertAccounts(accounts,organizationId);
   } catch (error) {
     console.error("Error creating Organization:", error);
     res.status(500).json({ message: "Internal server error." });
