@@ -313,8 +313,6 @@ exports.getOneOrganization = async (req, res) => {
 };
 
 
-
-
 // edit organizations
 exports.updateOrganization = async (req, res) => {
   console.log("Received request to update organization:", req.body);

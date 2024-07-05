@@ -1,6 +1,8 @@
 const Organization = require("../database/model/organization");
 const Account = require("../database/model/account")
 
+
+//Add Account
 exports.addAccount = async (req, res) => {
     console.log("Add Account:", req.body);
     try {
@@ -57,4 +59,26 @@ exports.addAccount = async (req, res) => {
       res.status(500).json({ message: "Internal server error." });
     }
   };
-  
+
+
+// Get all accounts for a given organizationId
+exports.getOneAccount = async (req, res) => {
+    try {
+        const { organizationId } = req.body;
+        // console.log(organizationId);
+
+        // Find all accounts where organizationId matches
+        const accounts = await Account.find({ organizationId });
+
+        if (!accounts.length) {
+            return res.status(404).json({
+                message: "No accounts found for the provided organization ID.",
+            });
+        }
+
+        res.status(200).json(accounts);
+    } catch (error) {
+        console.error("Error fetching accounts:", error);
+        res.status(500).json({ message: "Internal server error." });
+    }
+};
