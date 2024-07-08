@@ -10,7 +10,7 @@ const cors = require('cors')
 const server = express()
 
 const organizationRouter = require("./router/organizationRouter")
-const accountRouter = require("./router/accountRouter")
+
 
 
 require('./database/connection/connection')
@@ -19,7 +19,7 @@ server.use(cors())
 
 server.use(express.json())
 
-server.use(organizationRouter,accountRouter)
+server.use(organizationRouter)
 
 //create port to  listen your server app
 PORT = 3000

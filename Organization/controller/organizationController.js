@@ -442,3 +442,114 @@ exports.deleteOrganization = async (req, res) => {
       res.status(500).json({ message: "Internal server error." });
     }
   };
+
+
+
+//additional data
+exports.getAdditionalData = (req, res) => {
+  try {
+    const additionalData = [
+      {
+        industry: [
+          "Agency or sales house",
+          "Agriculture",
+          "Art & Design",
+          "Automotive",
+          "Construction",
+          "Consulting",
+          "Consumer Packaged Goods",
+          "Education",
+          "Engineering",
+          "Entertainment",
+          "Financial Services",
+          "Food Services (Restaurants/Fast Food)",
+          "Gaming",
+          "Government",
+          "Health Care",
+          "Interior Design",
+          "Internal",
+          "Legal",
+          "Manufacturing",
+          "Marketing",
+          "Mining and Logistics",
+          "Non-Profit",
+          "Publishing and Web Media",
+          "Real Estate",
+          'Retail (E-Commerce and Offline)',
+          "Services",
+          "Technology",
+          "Telecommunications",
+          "Travel/Hospitality",
+          "Web Designing",
+          "Web Development",
+          "Writers"
+          ],
+        financialYear: [
+          "January - December",
+          "February - January ",
+          "March - February ",
+          "April - March" ,
+          "May - April ",
+          "June - May ",
+          "July - June ",
+          "August - July ",
+          "September - August ",
+          "October - September ",
+          "November -October ",
+          "December - November "
+        ],
+        dateFormat: {
+          "short": [
+            "mm/dd/yy",
+            "dd/mm/yy",
+            "yy/mm/dd"
+          ],
+          "medium": [
+            "mm/dd/yyyy",
+            "dd/mm/yyyy",
+            "yyyy/mm/dd"
+          ],
+          "long": [
+            "dd MMM yyyy",
+            "dd MMMM yyyy",
+            "MMMM dd yyyy",
+            "EEE, MMMM dd, yyyy",
+            "EEEEEE, MMMM dd, yyyy",
+            "MMMM dd, yyyy",
+            "yyyy MM dd"
+          ]
+        },
+        companyId: [
+          "ACN",
+          "BN",
+          "CN",
+          "CPR",
+          "CVR",
+          "DIW",
+          "KT",
+          "ORG",
+          "SEC",
+          "Company ID :"],
+        dateSplit: ["-", "/", "."],
+        taxId: ["ABN",
+          "BN",
+          "CST",
+          "ORG",
+          "TAX",
+          "VST",
+          "Tax ID :"]
+      }
+    ];
+
+    if (additionalData.length > 0) {
+      res.status(200).json(additionalData);
+    } else {
+      res.status(404).json("No Additional Data found");
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json("Internal server error");
+  }
+};
+
+

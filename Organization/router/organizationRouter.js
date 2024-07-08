@@ -8,6 +8,8 @@ router.post('/add-organisation',organizationController.addOrganization)
 
 router.get('/get-all-organisation',organizationController.getAllOrganization)
 
+router.get('/get-additional-data',organizationController.getAdditionalData)
+
 router.get('/get-one-organisation/:_id',organizationController.getOneOrganization)
 
 router.put('/edit-organisation',organizationController.updateOrganization)
