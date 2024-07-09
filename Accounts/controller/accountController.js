@@ -82,3 +82,43 @@ exports.getOneAccount = async (req, res) => {
         res.status(500).json({ message: "Internal server error." });
     }
 };
+
+
+// Get all accounts type
+exports.getAccountType = async (req, res) => {
+  try {
+    const categorized = {
+      Asset: {
+        Assets: [
+          "Current Assets",
+          "Fixed Assets",
+          "Cash-in-hand",
+          "Sundry Debtors",
+        ],
+      },
+      ErrorEventxpense: [
+        "Indirect Expenses",
+        "Direct Expenses",
+        "Purchase",
+    ],
+      Income: [
+        "Indirect Income",
+        "Direct Income",
+        "Sales",
+      ],
+      Liability: {
+        Liabilities: [
+          "Duties & Taxes",
+          "Capital Account",
+          "Current Liabilities",
+          "Sundry Creditors",
+        ],
+      },
+    };
+
+    res.status(200).json(categorized);
+  } catch (error) {
+    console.error("Error fetching accounts:", error);
+    res.status(500).json({ message: "Internal server error." });
+  }
+};

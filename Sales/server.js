@@ -6,7 +6,7 @@ const cors = require('cors')
 
 const server = express()
 
-const accountRouter = require("./router/accountRouter")
+const saleRouter = require("./router/saleRouter")
 
 require('./database/connection/connection')
 
@@ -14,9 +14,9 @@ server.use(cors())
 
 server.use(express.json())
 
-server.use(accountRouter)
+server.use(saleRouter)
 
-PORT = 3004
+PORT = 3007
 
 server.get('/',(req,res)=>{
     res.status(200).json("Bill BIZZ server started")
