@@ -147,135 +147,122 @@ async function insertAccounts(accounts,organizationId) {
 
 // add organization
 exports.addOrganization = async (req, res) => {
-  console.log("add Organization:", req.body);
+  console.log("Add Organization:", req.body);
   try {
-    const {
-      organizationId,
-      organizationLogo,
-      organizationName,
-      organizationCountry,
-      organizationIndustry,
+      const {
+          organizationId,
+          organizationLogo,
+          organizationName,
+          organizationCountry,
+          organizationIndustry,
 
-      addline1,
-      addline2,
-      city,
-      pincode,
-      state,
+          addline1,
+          addline2,
+          city,
+          pincode,
+          state,
 
-      organizationPhNum,
-      website,
-      baseCurrency,
-      fiscalYear,
-      reportBasis,
-      language,
-      timeZone,
-      dateFormat,
-      dateSplit,
-      companyId,
-      companyIdField,
-      taxId,
-      taxIdField,
-      qrLocation,
-      qrSignature,
-      twitter,
-      insta,
-      linkedin,
-      facebook,
-      
-      addfield,
+          organizationPhNum,
+          website,
+          baseCurrency,
+          fiscalYear,
+          reportBasis,
+          language,
+          timeZone,
+          dateFormat,
+          dateSplit,
+          companyId,
+          companyIdField,
+          taxId,
+          taxIdField,
+          qrLocation,
+          qrSignature,
+          twitter,
+          insta,
+          linkedin,
+          facebook,
+          
+          addfield,
 
-      accountHolderName,
-      bankName,
-      accNum,
-      ifsc,
-    } = req.body;
+          accountHolderName,
+          bankName,
+          accNum,
+          ifsc,
+      } = req.body;
 
-    // Check if an organization with the same organizationName already exists
-    const existingOrganization = await Organization.findOne({ organizationName });
+      // Check if an organization with the same organizationName already exists
+      const existingOrganization = await Organization.findOne({ organizationName });
 
-    if (existingOrganization) {
-      return res.status(409).json({
-        message: "Organization with the provided organizationName already exists.",
+      if (existingOrganization) {
+          return res.status(409).json({
+              message: "Organization with the provided organizationName already exists.",
+          });
+      }
+
+      // Create a new organization
+      const newOrganization = new Organization({
+          organizationId,
+          organizationLogo,
+          organizationName,
+          organizationCountry,
+          organizationIndustry,
+          organizationPhNum,
+          website,
+          baseCurrency,
+          fiscalYear,
+          reportBasis,
+          language,
+          timeZone,
+          dateFormat,
+          dateSplit,
+          companyId,
+          companyIdField,
+          taxId,
+          taxIdField,
+          qrLocation,
+          qrSignature,
+          twitter,
+          insta,
+          linkedin,
+          facebook,
+
+          addline1,
+          addline2,
+          city,
+          pincode,
+          state,
+
+          accountHolderName,
+          bankName,
+          accNum,
+          ifsc,
+
+          addfield: Array.isArray(addfield) ? addfield.map((field) => ({
+              label: field.label,
+              value: field.value,
+          })) : [],
       });
+
+      const savedOrganization = await newOrganization.save();
+
+      if (!savedOrganization) {
+        console.error("Organization could not be saved.");
+        return res.status(500).json({ message: "Failed to create organization." });
     }
 
-    // Create a new organization
-    const newOrganization = new Organization({
-      organizationId,
-      organizationLogo,
-      organizationName,
-      organizationCountry,
-      organizationIndustry,
-      organizationPhNum,
-      website,
-      baseCurrency,
-      fiscalYear,
-      reportBasis,
-      language,
-      timeZone,
-      dateFormat,
-      dateSplit,
-      companyId,
-      companyIdField,
-      taxId,
-      taxIdField,
-      qrLocation,
-      qrSignature,
-      twitter,
-      insta,
-      linkedin,
-      facebook,
-
-      addline1,
-      addline2,
-      city,
-      pincode,
-      state,
-
-      accountHolderName,
-      bankName,
-      accNum,
-      ifsc,
-
-      // address: address.map((addr) => ({
-      //   addline1: addr.addline1,
-      //   addline2: addr.addline2,
-      //   city: addr.city,
-      //   pincode: addr.pincode,
-      //   state: addr.state,
-      // })),
-
-      addfield: addfield.map((field) => ({
-        label: field.label,
-        value: field.value,
-      })),
-      // bankfield: bankfield.map((bank) => ({
-      //   accountHolderName: bank.accountHolderName,
-      //   bankName: bank.bankName,
-      //   accNum: bank.accNum,
-      //   ifsc: bank.ifsc,
-      // })),
-      
-    });
-
-    
-    const savedOrganization = await newOrganization.save();
-
-    
-    res.status(201).json({
-      message: "Organization created successfully."
-      // organization: savedOrganization,
-    });
-    console.log("Organization created successfully:");
-    insertAccounts(accounts,organizationId);
+      res.status(201).json({
+          message: "Organization created successfully."
+      });
+      console.log("Organization created successfully:");
+      insertAccounts(accounts, organizationId);
   } catch (error) {
-    console.error("Error creating Organization:", error);
-    res.status(500).json({ message: "Internal server error." });
+      console.error("Error creating Organization:", error);
+      res.status(500).json({ message: "Internal server error." });
   }
 };
 
 
-// get all organozations
+// get all organizations
 exports.getAllOrganization = async (req, res) => {
   try {
     const allOrganizations = await Organization.find();
