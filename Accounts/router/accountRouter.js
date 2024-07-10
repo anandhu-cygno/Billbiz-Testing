@@ -6,8 +6,12 @@ const accountController = require("../controller/accountController")
 
 router.post('/add-account',accountController.addAccount)
 
-router.get('/get-one-account',accountController.getOneAccount)
+router.get('/get-all-account',accountController.getAllAccount)
 
-router.get('/get-account-type',accountController.getAccountType)
+router.get('/get-one-account/:id',accountController.getOneAccount)
+
+router.put('/edit-account/:id',accountController.editAccount)
+
+router.put('/delete-account/:id',accountController.deleteAccount)
 
 module.exports = router
