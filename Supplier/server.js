@@ -16,7 +16,7 @@ server.use(express.json())
 
 server.use(supplierRouter)
 
-PORT = 3009
+PORT = 5009
 
 server.get('/',(req,res)=>{
     res.status(200).json("Bill BIZZ server started")
