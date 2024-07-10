@@ -178,7 +178,7 @@ const accounts = [
 
 async function insertAccounts(accounts,organizationId) {
 
-  const accountDocuments = accounts.map(account => {
+const accountDocuments = accounts.map(account => {
     const currentDate = new Date();
     const day = String(currentDate.getDate()).padStart(2, '0');
     const month = String(currentDate.getMonth() + 1).padStart(2, '0'); 
