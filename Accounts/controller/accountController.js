@@ -84,58 +84,42 @@ exports.getOneAccount = async (req, res) => {
 };
 
 
-// Get all accounts for a given organizationId
+
+// Get all accounts type
 exports.getAccountType = async (req, res) => {
   try {
-    const categorized = [
-      {
-        accountType: 'Asset',
-        accountGroup: 'Assets',
-        accountHeads: [
-          'Current Assets',
-          'Fixed Assets',
-          'Cash-in-hand',
-          'Sundry Debtors'
-        ]
+    const categorized = {
+      Asset: {
+        Assets: [
+          "Current Assets",
+          "Fixed Assets",
+          "Cash-in-hand",
+          "Sundry Debtors",
+        ],
       },
-      {
-        accountType: 'Expense',
-        accountGroup: 'Expenses',
-        accountHeads: [
-          'Indirect Expenses',
-          'Direct Expenses',
-          'Purchase'
-        ]
+      ErrorEventxpense: [
+        "Indirect Expenses",
+        "Direct Expenses",
+        "Purchase",
+    ],
+      Income: [
+        "Indirect Income",
+        "Direct Income",
+        "Sales",
+      ],
+      Liability: {
+        Liabilities: [
+          "Duties & Taxes",
+          "Capital Account",
+          "Current Liabilities",
+          "Sundry Creditors",
+        ],
       },
-      {
-        accountType: 'Income',
-        accountGroup: 'Income',
-        accountHeads: [
-          'Indirect Income',
-          'Direct Income',
-          'Sales'
-        ]
-      },
-      {
-        accountType: 'Liability',
-        accountGroup: 'Liabilities',
-        accountHeads: [
-          'Duties & Taxes',
-          'Capital Account',
-          'Current Liabilities',
-          'Sundry Creditors'
-        ]
-      }
-    ];
-    
-            
+    };
 
-      res.status(200).json(categorized);
+    res.status(200).json(categorized);
   } catch (error) {
-      console.error("Error fetching accounts:", error);
-      res.status(500).json({ message: "Internal server error." });
+    console.error("Error fetching accounts:", error);
+    res.status(500).json({ message: "Internal server error." });
   }
 };
-
-
-

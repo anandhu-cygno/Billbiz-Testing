@@ -8,6 +8,7 @@ const server = express()
 
 const salesRouter = require("./router/salesRouter")
 
+
 require('./database/connection/connection')
 
 server.use(cors())
