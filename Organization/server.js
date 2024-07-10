@@ -16,11 +16,7 @@ server.use(express.json())
 
 server.use(organizationRouter)
 
-<<<<<<< HEAD
-PORT = 3004
-=======
 PORT = 5004
->>>>>>> d9002ce8a4237c5bb8f605d02048c64475165e4b
 
 server.get('/',(req,res)=>{
     res.status(200).json("Bill BIZZ server started - Organization ")
