@@ -16,6 +16,7 @@ server.use(express.json())
 
 server.use(customerRouter)
 
+<<<<<<< HEAD
 PORT = 3002
 
 server.get('/',(req,res)=>{
@@ -24,5 +25,15 @@ server.get('/',(req,res)=>{
 
 server.listen(PORT,()=>{
     console.log(`BillBIZZ server started at port : ${PORT}`);
+=======
+PORT = 5002
+
+server.get('/',(req,res)=>{
+    res.status(200).json("Bill BIZZ server started - Customer")
+})
+
+server.listen(PORT,()=>{
+    console.log(`BillBIZZ server Customer started at port : ${PORT}`);
+>>>>>>> d9002ce8a4237c5bb8f605d02048c64475165e4b
 })
 

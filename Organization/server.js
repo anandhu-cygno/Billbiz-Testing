@@ -16,13 +16,17 @@ server.use(express.json())
 
 server.use(organizationRouter)
 
+<<<<<<< HEAD
 PORT = 3004
+=======
+PORT = 5004
+>>>>>>> d9002ce8a4237c5bb8f605d02048c64475165e4b
 
 server.get('/',(req,res)=>{
-    res.status(200).json("Bill BIZZ server started")
+    res.status(200).json("Bill BIZZ server started - Organization ")
 })
 
 server.listen(PORT,()=>{
-    console.log(`BillBIZZ server started at port : ${PORT}`);
+    console.log(`BillBIZZ server Organization started at port : ${PORT}`);
 })
 
