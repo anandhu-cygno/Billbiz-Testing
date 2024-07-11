@@ -22,7 +22,10 @@ exports.addAccount = async (req, res) => {
       } = req.body;
   
       // Check if an organization with the same organizationName already exists
-      const existingAccount = await Account.findOne({ accountName });
+      const existingAccount = await Account.findOne({
+        accountName: accountName,
+        organizationId: organizationId,
+    });
   
       if (existingAccount) {
         return res.status(409).json({
