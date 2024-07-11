@@ -2,8 +2,8 @@ const express = require("express")
 
 const router = new express.Router()
 
-<<<<<<< HEAD
-const itemController = require("../controller/itemController")
+const itemController = require("../controller/itemController");
+const manufacturerController = require("../controller/manufacturerController");
 
 // Item
 router.post('/item/add', itemController.addItem);
@@ -11,8 +11,13 @@ router.get('/item/get-all', itemController.getAllItem);
 router.get('/item/get/:id', itemController.getAItem)
 router.put('/item/update/:id',itemController.updateItem)
 router.delete('/item/delete/:id',itemController.deleteItem)
-=======
->>>>>>> d9002ce8a4237c5bb8f605d02048c64475165e4b
+
+//manufacturer
+router.post('/addManufacturer', manufacturerController.addManufacturer);
+router.get('/getAllManufacturer', manufacturerController.getAllManufacturer)
+router.get('/getAManufacturer/:id',manufacturerController.getAManufacturer)
+router.put('/updateManufacturer/:id', manufacturerController.updateManufacturer)
+router.delete('/deleteManufacturer/:id',manufacturerController.deletedManufacturer)
 
 
 module.exports = router
