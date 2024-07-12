@@ -1,35 +1,27 @@
 const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
-// const addressSchema = new Schema({
-//   addline1: { type: String },
-//   addline2: { type: String },
-//   city: { type: String },
-//   pincode: { type: String },
-//   state: { type: String },
-// }, { _id: false });
+
 
 const addfieldSchema = new Schema({
   label: { type: String },
   value: { type: String },
 }, { _id: false });
 
-// const bankSchema = new Schema({
-//   accountHolderName: { type: String },
-//   bankName: { type: String },
-//   accNum: { type: String },
-//   ifsc: { type: String },
-// }, { _id: false });
-
 const organizationSchema = new Schema({
+
   organizationId: { type: String },
-  organizationLogo: { type: String },
   organizationName: { type: String },
+  organizationLogo: { type: String },
+
+  primaryContactName: { type: String },
+  primaryContactNum: { type: String },
+  
 
   organizationCountry: { type: String },
   organizationIndustry: { type: String },
 
-  //address: [addressSchema]
+  //address
   addline1: { type: String },
   addline2: { type: String },
   city: { type: String },
@@ -63,12 +55,12 @@ const organizationSchema = new Schema({
   linkedin: { type: String },
   facebook: { type: String },
 
-  //bankfield: [bankSchema],
+  //bankfield
   accountHolderName: { type: String },
   bankName: { type: String },
   accNum: { type: String },
   ifsc: { type: String },
-});
+}, { versionKey: false }); 
 
 const Organization = mongoose.model("Organization", organizationSchema);
 
