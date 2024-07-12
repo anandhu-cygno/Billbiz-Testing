@@ -10,9 +10,11 @@ exports.addAccount = async (req, res) => {
         organizationId,
         accountName,
         accountCode,
-        accountType,
+
+        accountSubhead,
+        accountHead,
         accountGroup,
-        accountHeads,
+
         openingBalance,
         openingBalanceDate,
         description,
@@ -38,9 +40,11 @@ exports.addAccount = async (req, res) => {
         organizationId,
         accountName,
         accountCode,
-        accountType,
+
+        accountSubhead,
+        accountHead,
         accountGroup,
-        accountHeads,
+
         openingBalance,
         openingBalanceDate,
         description,

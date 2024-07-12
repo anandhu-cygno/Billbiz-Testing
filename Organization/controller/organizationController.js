@@ -244,10 +244,10 @@ exports.updateOrganization = async (req, res) => {
 exports.deleteOrganization = async (req, res) => {
     console.log("Delete Organization by id:", req.params.id);
     try {
-      const { id } = req.params;
+      const { organizationId } = req.params;
   
       // Check if the organization exists
-      const organization = await Organization.findById(id);
+      const organization = await Organization.findOne({organizationId});
   
       if (!organization) {
         return res.status(404).json({
@@ -256,7 +256,7 @@ exports.deleteOrganization = async (req, res) => {
       }
   
       // Delete the organization
-      await Organization.findByIdAndDelete(id);
+      await Organization.findByIdAndDelete({organizationId});
   
       res.status(200).json({
         message: "Organization deleted successfully.",

@@ -22,9 +22,7 @@ const accountSchema = new Schema({
 
 const Accounts = mongoose.model("Accounts", accountSchema);
 
-module.exports = Accounts
-
-;
+module.exports = Accounts;
 
 
 

@@ -15,9 +15,9 @@ router.get('/get-additional-data',organizationController.getAdditionalData)
 
 router.get('/get-one-organization/:organizationId',organizationController.getOneOrganization)
 
-router.put('/edit-organization/:id',organizationController.updateOrganization)
+// router.put('/edit-organization/:id',organizationController.updateOrganization)
 
-router.delete('/delete-organization/:id',organizationController.deleteOrganization)
+router.delete('/delete-organization/:organizationId',organizationController.deleteOrganization)
 
 
 
@@ -26,6 +26,8 @@ router.delete('/delete-organization/:id',organizationController.deleteOrganizati
 router.get('/get-all-organization',organizationController.getAllOrganization)
 
 router.post('/create-client',clientController.createOrganizationAndClient)
+
+router.get('/get-all-client',clientController.getAllClient)
 
 
 module.exports = router
