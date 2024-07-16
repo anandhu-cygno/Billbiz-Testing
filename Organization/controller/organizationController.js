@@ -493,7 +493,14 @@ exports.setupOrganization = async (req, res) => {
       message: "Organization updated successfully."
     });
     console.log("Organization updated successfully:", savedOrganization);
-    insertAccounts(accounts, organizationId);
+
+    
+    
+    const account = await Account.find({ organizationId:organizationId });
+    if (!account) {
+      insertAccounts(accounts, organizationId);
+        };
+
 
   } catch (error) {
     console.error("Error updating Organization:", error);

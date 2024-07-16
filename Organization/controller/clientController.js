@@ -1,10 +1,11 @@
 const Organization = require("../database/model/organization");
 const Client = require("../database/model/client");
 const User = require("../database/model/user");
+const Prefix = require("../database/model/prefix");
 const bcrypt = require('bcrypt');
 
 
-// Create New Client and Organization
+// Create New Client and Organization and Prefix
 exports.createOrganizationAndClient = async (req, res) => {
   console.log("Create Organization and Client:", req.body);
   try {
@@ -85,8 +86,63 @@ exports.createOrganizationAndClient = async (req, res) => {
       return res.status(500).json({ message: "Failed to create user." });
     }
 
+
+  
+      const newPrefix = new Prefix({
+        organizationId,
+
+        journal:"JN-",
+        journalNum:1,
+        
+        creditNote: "CN-",
+        creditNoteNum: 1,
+        
+        customerPayment: 'CP-',
+        customerPaymentNum: 1,
+
+        purchaseOrder: "PO-",
+        purchaseOrderNum: 1,
+        
+        salesOrder: "SO-",
+        salesOrderNum: 1,
+
+        vendorPayment: "VP-",
+        vendorPaymentNum: 1,
+
+        retainerInvoice: "RET-",
+        retainerInvoiceNum: 1,
+
+        vendorCredits: "DN-",
+        vendorCreditsNum: 1,
+
+        billOfSupply: "BOS-",
+        billOfSupplyNum: 1,
+
+        debitNote: "CDN-",
+        debitNoteNum: 1,
+
+        invoice:"INV-",
+        invoiceNum: 1,
+
+        quote: "QT-",
+        quoteNum: 1,
+        
+        deliveryChallan: "DC-",
+        deliveryChallanNum: 1,
+      });
+
+  
+      const savedPrefix = await newPrefix.save();
+  
+      if (!savedPrefix) {
+        console.error("Prefix could not be saved.");
+        return res.status(500).json({ message: "Failed to create Prefix." });
+      }
+      
+    
+
     res.status(201).json({
-      message: "Organization, Client, and User created successfully.",
+      message: "Organization, Prefix, Client, and User created successfully.",
       organizationId: organizationId,
     });
     console.log("Organization, Client, and User created successfully:", { organizationId });
@@ -95,6 +151,9 @@ exports.createOrganizationAndClient = async (req, res) => {
     res.status(500).json({ message: "Internal server error." });
   }
 };
+
+
+
 
 
 // Get all Client
