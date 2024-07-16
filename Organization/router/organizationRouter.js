@@ -4,16 +4,30 @@ const router = new express.Router()
 
 const organizationController = require("../controller/organizationController")
 
-router.post('/add-organisation',organizationController.addOrganization)
+const clientController = require("../controller/clientController")
 
-router.get('/get-all-organisation',organizationController.getAllOrganization)
+
+
+//Production
+router.post('/setup-organization',organizationController.setupOrganization)
 
 router.get('/get-additional-data',organizationController.getAdditionalData)
 
-router.get('/get-one-organisation/:_id',organizationController.getOneOrganization)
+router.get('/get-one-organization/:organizationId',organizationController.getOneOrganization)
 
-router.put('/edit-organisation',organizationController.updateOrganization)
+// router.put('/edit-organization/:id',organizationController.updateOrganization)
 
-router.delete('/delete-organisation/:id',organizationController.deleteOrganization)
+router.delete('/delete-organization/:organizationId',organizationController.deleteOrganization)
+
+
+
+//Internal
+
+router.get('/get-all-organization',organizationController.getAllOrganization)
+
+router.post('/create-client',clientController.createOrganizationAndClient)
+
+router.get('/get-all-client',clientController.getAllClient)
+
 
 module.exports = router
