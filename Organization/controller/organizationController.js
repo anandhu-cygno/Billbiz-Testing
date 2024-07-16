@@ -82,8 +82,8 @@ const accountDocuments = accounts.map(account => {
         accountHead: account.accountHead,
         accountGroup: account.accountGroup,
 
-        openingBalance: 0, 
-        openingBalanceDate: formattedDate, 
+        balance: 0, 
+        openingDate: formattedDate, 
         description: "" 
     };});
 
@@ -496,7 +496,7 @@ exports.setupOrganization = async (req, res) => {
 
     
     
-    const account = await Account.find({ organizationId:organizationId });
+    const account = await Account.findOne({ organizationId:organizationId });
     if (!account) {
       insertAccounts(accounts, organizationId);
         };

@@ -2,6 +2,10 @@ const Organization = require("../database/model/organization");
 const Client = require("../database/model/client");
 const User = require("../database/model/user");
 const Prefix = require("../database/model/prefix");
+const Account = require("../database/model/account")
+const Journal = require("../database/model/journal");
+const TrialBalance = require("../database/model/trialBalance");
+
 const bcrypt = require('bcrypt');
 
 
@@ -171,3 +175,51 @@ exports.getAllClient = async (req, res) => {
     res.status(500).json("Internal server error");
   }
 };
+
+
+
+// Get  OrganizationId
+exports.getOrganizationId = (req, res) => {
+  try {
+    const organizationId = "INDORG0001";
+    res.status(200).json({ organizationId });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json("Internal server error");
+  }
+};
+
+
+// Flush DB
+exports.deleteAll = async (req, res) => {
+  try {
+    await Organization.deleteMany({});
+    console.log("Organization data deleted.");
+
+    await Client.deleteMany({});
+    console.log("Client data deleted.");
+
+    await User.deleteMany({});
+    console.log("User data deleted.");
+
+    await Prefix.deleteMany({});
+    console.log("Prefix data deleted.");
+
+    await Account.deleteMany({});
+    console.log("Account data deleted.");
+
+    await Journal.deleteMany({});
+    console.log("Journal data deleted.");
+
+    await TrialBalance.deleteMany({});
+    console.log("Trial Balance data deleted.");
+    res.status(200).json("Database Flushed Successfully");
+
+  } catch (error) {
+    console.error(error);
+    res.status(500).json("Internal server error");
+  }
+};
+
+
+
