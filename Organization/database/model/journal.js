@@ -5,23 +5,24 @@ const { Schema } = mongoose;
 const transactionSchema = new Schema({
     accountId: { type: String },
     accountName: { type: String },
-    creditamount: { type: String },
-    debitamount: { type: String },
+    creditAmount: { type: Number },
+    debitAmount: { type: Number },
     description: { type: String },
     contact: { type: String },
   }, { _id: false });
 
 
 const journalSchema = new Schema({
-    organization_Id: {type:String},
+    organizationId: {type:String},
+    journalId: {type:String},
     date: {type:String},
     reference: {type:String},
     note: {type:String},
     cashBasedJournal: {type:String},
     currency: {type:String},
     transaction: [transactionSchema],
-    totalDebitAmount: {type:String},
-    totalCreditAmount: {type:String},
+    totalDebitAmount: {type:Number},
+    totalCreditAmount: {type:Number},
 
 });
 
