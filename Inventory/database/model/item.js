@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
 const itemSchema = new Schema({
+    organizationId: {type: String},
     itemType: { type: String, enum: ['Goods', 'Service'] },
     itemName: { type: String},
     sku: { type: String, unique: true },
@@ -17,7 +18,18 @@ const itemSchema = new Schema({
     purchaseAccount: { type: [String] },
     purchaseDescription: { type: String },
     preferredVendor: { type: [String] },
-    itemImage: { type: String }
+    mrp: { type: Number },
+    tax: { type: String },
+    hsn: { type: String },
+    cess: { type: String },
+    alterUnit: { type: [String] },
+    quantityAlertLevel: { type: String },
+    productUsage: { type: String },
+    createdDate: { type: String },
+    updatedDate: { type: String },
+    barcodePrefix: { type: String },
+    warranty: { type: String },
+    itemImage: { type: String },
 });
 
 const Item = mongoose.model("Item", itemSchema);

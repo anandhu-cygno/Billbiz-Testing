@@ -6,7 +6,8 @@ const Item = require("../database/model/item");
 exports.addItem = async (req, res) => {
     console.log("Add Item:", req.body);
     try {
-      const {       
+      const {    
+        organizationId,   
         itemType,
         itemName,
         sku,
@@ -22,7 +23,18 @@ exports.addItem = async (req, res) => {
         purchaseAccount,
         purchaseDescription,
         preferredVendor,
-        itemImage
+        mrp,
+        tax,
+        hsn,
+        cess,
+        alterUnit,
+        quantityAlertLevel,
+        productUsage,
+        createdDate,
+        updatedDate,
+        barcodePrefix,
+        warranty,
+        itemImage,
       } = req.body;
   
     //   // Check if an item with the same organizationId already exists
@@ -36,6 +48,7 @@ exports.addItem = async (req, res) => {
   
       // Create a new item
       const newItem = new Item({
+        organizationId,
         itemType,
         itemName,
         sku,
@@ -51,6 +64,17 @@ exports.addItem = async (req, res) => {
         purchaseAccount,
         purchaseDescription,
         preferredVendor,
+        mrp,
+        tax,
+        hsn,
+        cess,
+        alterUnit,
+        quantityAlertLevel,
+        productUsage,
+        createdDate,
+        updatedDate,
+        barcodePrefix,
+        warranty,
         itemImage
       });
       await newItem.save();
@@ -71,7 +95,11 @@ exports.addItem = async (req, res) => {
 exports.getAllItem = async (req, res) => {
     try {
         const allItem = await Item.find()
-        res.status(200).json(allItem);
+        if (allItem.length > 0) {
+          res.status(200).json(allItem);
+        } else {
+          res.status(404).json("No Items found");
+        }
     } catch (error) {
         console.error("Error fetching Items:", error);
         res.status(500).json({ message: "Internal server error." });
@@ -83,8 +111,12 @@ exports.getAllItem = async (req, res) => {
 exports.getAItem = async(req,res)=>{
     const itemId = req.params.id
     try {
-        const item = await Item.findOne({_id: itemId})
-        res.status(200).json({item})
+        const item = await Item.findById({_id: itemId})
+        if (item) {
+          res.status(200).json(item)
+        } else {
+          res.status(404).json({ message: "Item not found" });
+        }
     } catch (error) {
         console.error("Error fetching a Item:", error);
         res.status(500).json({ message: "Internal server error." });
@@ -97,8 +129,9 @@ exports.updateItem = async (req, res) => {
   console.log("Received request to update item:", req.body);
  
   try {
-      const itemId = req.params.id;
       const {
+          _id,
+          organizationId,
           itemType,
           itemName,
           sku,
@@ -114,12 +147,27 @@ exports.updateItem = async (req, res) => {
           purchaseAccount,
           purchaseDescription,
           preferredVendor,
+          mrp,
+          tax,
+          hsn,
+          cess,
+          alterUnit,
+          quantityAlertLevel,
+          productUsage,
+          createdDate,
+          updatedDate,
+          barcodePrefix,
+          warranty,
           itemImage
       } = req.body;
 
+      // Log the ID being updated
+      console.log("Updating organization with ID:", _id);
 
-      const updatedItem = await Item.findByIdAndUpdate({_id: itemId},
+      const updatedItem = await Item.findByIdAndUpdate(
+        _id,
           {
+              organizationId,
               itemType,
               itemName,
               sku,
@@ -135,6 +183,17 @@ exports.updateItem = async (req, res) => {
               purchaseAccount,
               purchaseDescription,
               preferredVendor,
+              mrp,
+              tax,
+              hsn,
+              cess,
+              alterUnit,
+              quantityAlertLevel,
+              productUsage,
+              createdDate,
+              updatedDate,
+              barcodePrefix,
+              warranty,
               itemImage
           },
           { new: true, runValidators: true }
