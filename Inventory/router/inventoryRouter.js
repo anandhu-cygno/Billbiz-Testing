@@ -3,8 +3,10 @@ const express = require("express")
 const router = new express.Router()
 
 const itemController = require("../controller/itemController");
-<<<<<<< HEAD
 const unitController = require("../controller/unitController")
+const manufacturerController = require("../controller/manufacturerController");
+const categoriesController = require("../controller/categoriesController")
+const brandController = require('../controller/brandController')
 
 // Item
 router.post('/add-item', itemController.addItem);
@@ -27,10 +29,6 @@ router.get('/get-one-unitConversion/:_id', unitController.getOneUnitConversion);
 router.put('/edit-unitConversion', unitController.updateUnitConversion);
 router.delete('/delete-unitConversion/:id', unitController.deleteUnitConversion);
 
-
-=======
-const manufacturerController = require("../controller/manufacturerController");
-
 // Item
 router.post('/item/add', itemController.addItem);
 router.get('/item/get-all', itemController.getAllItem);
@@ -44,7 +42,20 @@ router.get('/getAllManufacturer', manufacturerController.getAllManufacturer)
 router.get('/getAManufacturer/:id',manufacturerController.getAManufacturer)
 router.put('/updateManufacturer/:id', manufacturerController.updateManufacturer)
 router.delete('/deleteManufacturer/:id',manufacturerController.deletedManufacturer)
->>>>>>> 621997b016de2967174a98f8ea38c0c4242b1c8a
+
+//category
+router.post('/addCategory', categoriesController.addCategory)
+router.get('/getAllCategories' , categoriesController.getAllCategories)
+router.get('/getACategory/:id' , categoriesController.getACategory)
+router.put("/updateCategory/:id" , categoriesController.updateCategory)
+router.delete("/deleteCategory/:id", categoriesController.deleteCategory)
+
+//brand
+router.post('/addBrand', brandController.addBrand);
+router.get('/getAllBrands', brandController.getAllBrands);
+router.get('/getBrand/:id', brandController.getABrand);
+router.put('/updateBrand/:id', brandController.updateBrand);
+router.delete('/deleteBrand/:id', brandController.deleteBrand);
 
 
 module.exports = router
