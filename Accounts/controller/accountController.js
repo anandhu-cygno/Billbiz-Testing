@@ -32,8 +32,8 @@ exports.addAccount = async (req, res) => {
         "Income": ["Income", "Other Income"]
       },
       "Liability": {
-        "Liabilities": ["Current liability", "Credit card", "Long term liability", "Other liability", "Overseas Tax Payable", "Sundry Creditors"],
-        "Expenses": ["Expense", "Cost of goods sold", "Other Expense"]
+        "Liabilities": ["Current Liability", "Credit Card", "Long Term Liability", "Other Liability", "Overseas Tax Payable", "Sundry Creditors"],
+        "Expenses": ["Expense", "Cost of Goods Sold", "Other Expense"]
       }
     };
 
