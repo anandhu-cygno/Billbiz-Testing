@@ -4,23 +4,23 @@ const { Schema } = mongoose;
 
 const customerSchema = new Schema({
     organizationId: {type:String},
-    customerType
-    firstName
-    lastName
+    customerType: {type:String},
+    firstName: {type:String},
+    lastName: {type:String},
 
-    companyName
-    customerEmail
-    workPhone
-    mobile
+    companyName: {type:String},
+    customerEmail: {type:String},
+    workPhone: {type:String},
+    mobile: {type:String},
 
-    dob 
-    cardNumber
+    dob : {type:String},
+    cardNumber: {type:String},
     
-    pan
-    currency
-    openingBalence
-    paymentTerms
-    documents
+    pan: {type:String},
+    currency: {type:String},
+    openingBalence: {type:String},
+    paymentTerms: {type:String},
+    documents: {type:String},
 
 
 
