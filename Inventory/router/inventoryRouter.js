@@ -3,10 +3,14 @@ const express = require("express")
 const router = new express.Router()
 
 const itemController = require("../controller/itemController");
-const unitController = require("../controller/unitController")
+const unitController = require("../controller/unitController");
 const manufacturerController = require("../controller/manufacturerController");
-const categoriesController = require("../controller/categoriesController")
-const brandController = require('../controller/brandController')
+const rackController = require("../controller/rackController");
+const categoriesController = require("../controller/categoriesController");
+
+
+
+                            //  //  //  INVENTORY   //  //  //
 
 // Item
 router.post('/add-item', itemController.addItem);
@@ -29,12 +33,14 @@ router.get('/get-one-unitConversion/:_id', unitController.getOneUnitConversion);
 router.put('/edit-unitConversion', unitController.updateUnitConversion);
 router.delete('/delete-unitConversion/:id', unitController.deleteUnitConversion);
 
-// Item
-router.post('/item/add', itemController.addItem);
-router.get('/item/get-all', itemController.getAllItem);
-router.get('/item/get/:id', itemController.getAItem)
-router.put('/item/update/:id',itemController.updateItem)
-router.delete('/item/delete/:id',itemController.deleteItem)
+
+//Rack
+router.post('/add-rack', rackController.addRack);
+router.get('/get-all-rack', rackController.getAllRack);
+router.get('/get-one-rack/:_id', rackController.getOneRack);
+router.put('/edit-rack', rackController.updateRack);
+router.delete('/delete-rack/:id', rackController.deleteRack);
+
 
 //manufacturer
 router.post('/addManufacturer', manufacturerController.addManufacturer);
@@ -50,12 +56,7 @@ router.get('/getACategory/:id' , categoriesController.getACategory)
 router.put("/updateCategory/:id" , categoriesController.updateCategory)
 router.delete("/deleteCategory/:id", categoriesController.deleteCategory)
 
-//brand
-router.post('/addBrand', brandController.addBrand);
-router.get('/getAllBrands', brandController.getAllBrands);
-router.get('/getBrand/:id', brandController.getABrand);
-router.put('/updateBrand/:id', brandController.updateBrand);
-router.delete('/deleteBrand/:id', brandController.deleteBrand);
+
 
 
 module.exports = router
