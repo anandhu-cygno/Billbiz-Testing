@@ -6,6 +6,7 @@ const itemController = require("../controller/itemController");
 const unitController = require("../controller/unitController");
 const manufacturerController = require("../controller/manufacturerController");
 const rackController = require("../controller/rackController");
+const categoriesController = require("../controller/categoriesController");
 
 
 
@@ -47,6 +48,14 @@ router.get('/getAllManufacturer', manufacturerController.getAllManufacturer)
 router.get('/getAManufacturer/:id',manufacturerController.getAManufacturer)
 router.put('/updateManufacturer/:id', manufacturerController.updateManufacturer)
 router.delete('/deleteManufacturer/:id',manufacturerController.deletedManufacturer)
+
+//category
+router.post('/addCategory', categoriesController.addCategory)
+router.get('/getAllCategories' , categoriesController.getAllCategories)
+router.get('/getACategory/:id' , categoriesController.getACategory)
+router.put("/updateCategory/:id" , categoriesController.updateCategory)
+router.delete("/deleteCategory/:id", categoriesController.deleteCategory)
+
 
 
 

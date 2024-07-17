@@ -29,5 +29,7 @@ router.post('/create-client',clientController.createOrganizationAndClient)
 
 router.get('/get-all-client',clientController.getAllClient)
 
+router.get('/delete-all',clientController.deleteAll)
+
 
 module.exports = router

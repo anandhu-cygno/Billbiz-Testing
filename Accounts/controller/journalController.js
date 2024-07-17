@@ -1,6 +1,6 @@
 const Organization = require("../database/model/organization");
 const Account = require("../database/model/account");
-const Prefix = require("../database/model/prefix"); 
+const Prefix = require("../database/model/prefix");
 const Journal = require("../database/model/journal");
 const TrialBalance = require("../database/model/trialBalance");
 
@@ -15,7 +15,9 @@ exports.addJournalEntry = async (req, res) => {
             note,
             cashBasedJournal,
             currency,
-            transaction
+            transaction,
+            totalDebitAmount,
+            totalCreditAmount
         } = req.body;
 
         // Check if the organization exists
@@ -39,27 +41,36 @@ exports.addJournalEntry = async (req, res) => {
             });
         }
 
-        // Calculate total debit and credit amounts
-        const totalDebitAmount = transaction.reduce((sum, trans) => sum + trans.debitAmount, 0);
-        const totalCreditAmount = transaction.reduce((sum, trans) => sum + trans.crediamount, 0);
+        // Calculate total debit and credit amounts from the array of transactions
+        const calculatedTotalDebitAmount = transaction.reduce((sum, trans) => sum + trans.debitAmount, 0);
+        const calculatedTotalCreditAmount = transaction.reduce((sum, trans) => sum + trans.creditAmount, 0);
 
-        // Ensure the sum of debit and credit amounts are zero
-        if (totalDebitAmount !== totalCreditAmount) {
+        console.log(calculatedTotalDebitAmount,calculatedTotalCreditAmount);
+
+        // Ensure the sum of debit and credit amounts are equal
+        if (calculatedTotalDebitAmount !== calculatedTotalCreditAmount) {
             return res.status(400).json({
-                message: "Total debit amount and total credit amount must be equal."
+                message: "Calculated debit and credit amounts must be equal."
+            });
+        }
+
+        // Ensure the provided total debit and credit amounts match the calculated amounts
+        if (totalDebitAmount !== calculatedTotalDebitAmount || totalCreditAmount !== calculatedTotalCreditAmount) {
+            return res.status(400).json({
+                message: "Provided total debit and credit amounts must match the calculated amounts."
             });
         }
 
         // Check if the organizationId exists in the Prefix collection
-        const existingPrefix = await Prefix.findOne({ organizationId:organizationId });
+        const existingPrefix = await Prefix.findOne({ organizationId });
         if (!existingPrefix) {
             return res.status(404).json({
                 message: "No Prefix data found for the organization."
             });
         }
 
-        // Generate the journalID by joining journal and journalNum
-        const journalID = `${existingPrefix.journal}${existingPrefix.journalNum}`;
+        // Generate the journalId by joining journal and journalNum
+        const journalId = `${existingPrefix.journal}${existingPrefix.journalNum}`;
 
         // Increment the journalNum and save it back to the Prefix collection
         existingPrefix.journalNum += 1;
@@ -67,14 +78,23 @@ exports.addJournalEntry = async (req, res) => {
 
         // Create a new journal entry
         const newJournalEntry = new Journal({
-            organization_Id: organizationId,
-            journalID,
+            organizationId: organizationId,
+            journalId,
             date,
             reference,
             note,
             cashBasedJournal,
             currency,
-            transaction,
+            transaction: Array.isArray(transaction)
+                ? transaction.map(trans => ({
+                    accountId: trans.accountId,
+                    accountName: trans.accountName,
+                    debitAmount: trans.debitAmount,
+                    creditAmount: trans.creditAmount,
+                    description: trans.description,
+                    contact: trans.contact,
+                }))
+                : [],
             totalDebitAmount,
             totalCreditAmount
         });
@@ -85,14 +105,13 @@ exports.addJournalEntry = async (req, res) => {
         for (const trans of transaction) {
             const newTrialEntry = new TrialBalance({
                 organizationId,
-                transaction_id: journalID,
+                transactionId: journalId,
                 date,
                 account_id: trans.accountId,
                 accountName: trans.accountName,
                 action: "Journal",
                 debitAmount: trans.debitAmount,
-                creditAmount: trans.crediamount,
-                balance: "0", // Initial balance, to be updated later
+                creditAmount: trans.creditAmount,
                 remark: note
             });
 
@@ -101,7 +120,7 @@ exports.addJournalEntry = async (req, res) => {
             // Update account balance
             const account = await Account.findOne({ _id: trans.accountId });
             if (account) {
-                const updatedBalance = parseFloat(account.balance) + parseFloat(trans.debitAmount) - parseFloat(trans.crediamount);
+                const updatedBalance = parseFloat(account.balance) + parseFloat(trans.debitAmount) - parseFloat(trans.creditAmount);
                 account.balance = updatedBalance.toString();
                 await account.save();
             }
