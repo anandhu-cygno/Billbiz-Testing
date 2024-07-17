@@ -3,15 +3,11 @@
   "version": "1.0.0",
   "main": "sever.js",
   "scripts": {
-<<<<<<< HEAD
 
 
 
     "start": "node server.js"
 
-=======
-    "test": "echo \"Error: no test specified\" && exit 1"
->>>>>>> 621997b016de2967174a98f8ea38c0c4242b1c8a
   },
   "author": "",
   "license": "ISC",

@@ -24,17 +24,20 @@ exports.addItem = async (req, res) => {
         purchaseDescription,
         preferredVendor,
         mrp,
-        tax,
-        hsn,
+        taxPreference,
+        hsnCode,
         cess,
+        intraStateTaxRate,
+        interStateTaxRate,
         alterUnit,
         quantityAlertLevel,
         productUsage,
         createdDate,
-        updatedDate,
+        // updatedDate,
         barcodePrefix,
         warranty,
         itemImage,
+        status
       } = req.body;
   
     //   // Check if an item with the same organizationId already exists
@@ -45,6 +48,12 @@ exports.addItem = async (req, res) => {
     //       message: "This item already exists.",
     //     });
     //   }
+
+    const currentDate = new Date();
+    const day = String(currentDate.getDate()).padStart(2, '0');
+    const month = String(currentDate.getMonth() + 1).padStart(2, '0'); 
+    const year = currentDate.getFullYear();
+    const formattedDate = `${day}-${month}-${year}`;
   
       // Create a new item
       const newItem = new Item({
@@ -65,17 +74,20 @@ exports.addItem = async (req, res) => {
         purchaseDescription,
         preferredVendor,
         mrp,
-        tax,
-        hsn,
+        taxPreference,
+        hsnCode,
         cess,
+        intraStateTaxRate,
+        interStateTaxRate,
         alterUnit,
         quantityAlertLevel,
         productUsage,
-        createdDate,
-        updatedDate,
+        createdDate: formattedDate,
+        // updatedDate,
         barcodePrefix,
         warranty,
-        itemImage
+        itemImage,
+        status: status || 'Active' // Default to 'Active' if not provided
       });
       await newItem.save();
   
@@ -148,21 +160,30 @@ exports.updateItem = async (req, res) => {
           purchaseDescription,
           preferredVendor,
           mrp,
-          tax,
-          hsn,
+          taxPreference,
+          hsnCode,
           cess,
+          intraStateTaxRate,
+          interStateTaxRate,
           alterUnit,
           quantityAlertLevel,
           productUsage,
-          createdDate,
+          // createdDate,
           updatedDate,
           barcodePrefix,
           warranty,
-          itemImage
+          itemImage,
+          status
       } = req.body;
 
       // Log the ID being updated
       console.log("Updating organization with ID:", _id);
+
+      const currentDate = new Date();
+      const day = String(currentDate.getDate()).padStart(2, '0');
+      const month = String(currentDate.getMonth() + 1).padStart(2, '0'); 
+      const year = currentDate.getFullYear();
+      const formattedDate = `${day}-${month}-${year}`;
 
       const updatedItem = await Item.findByIdAndUpdate(
         _id,
@@ -184,17 +205,20 @@ exports.updateItem = async (req, res) => {
               purchaseDescription,
               preferredVendor,
               mrp,
-              tax,
-              hsn,
+              taxPreference,
+              hsnCode,
               cess,
+              intraStateTaxRate,
+              interStateTaxRate,
               alterUnit,
               quantityAlertLevel,
               productUsage,
-              createdDate,
-              updatedDate,
+              // createdDate,
+              updatedDate: formattedDate,
               barcodePrefix,
               warranty,
-              itemImage
+              itemImage,
+              status
           },
           { new: true, runValidators: true }
       );
