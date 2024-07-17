@@ -19,9 +19,11 @@ const itemSchema = new Schema({
     purchaseDescription: { type: String },
     preferredVendor: { type: [String] },
     mrp: { type: Number },
-    tax: { type: String },
-    hsn: { type: String },
+    taxPreference: { type: [String] },
+    hsnCode: { type: String },
     cess: { type: String },
+    intraStateTaxRate: { type: [String] },
+    interStateTaxRate: { type: [String] },
     alterUnit: { type: [String] },
     quantityAlertLevel: { type: String },
     productUsage: { type: String },
@@ -30,6 +32,7 @@ const itemSchema = new Schema({
     barcodePrefix: { type: String },
     warranty: { type: String },
     itemImage: { type: String },
+    status: { type: String, enum: ['Active', 'Inactive'], default: 'Active' },
 });
 
 const Item = mongoose.model("Item", itemSchema);

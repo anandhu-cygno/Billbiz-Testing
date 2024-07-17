@@ -3,8 +3,13 @@ const express = require("express")
 const router = new express.Router()
 
 const itemController = require("../controller/itemController");
-<<<<<<< HEAD
-const unitController = require("../controller/unitController")
+const unitController = require("../controller/unitController");
+const manufacturerController = require("../controller/manufacturerController");
+const rackController = require("../controller/rackController");
+
+
+
+                            //  //  //  INVENTORY   //  //  //
 
 // Item
 router.post('/add-item', itemController.addItem);
@@ -28,15 +33,13 @@ router.put('/edit-unitConversion', unitController.updateUnitConversion);
 router.delete('/delete-unitConversion/:id', unitController.deleteUnitConversion);
 
 
-=======
-const manufacturerController = require("../controller/manufacturerController");
+//Rack
+router.post('/add-rack', rackController.addRack);
+router.get('/get-all-rack', rackController.getAllRack);
+router.get('/get-one-rack/:_id', rackController.getOneRack);
+router.put('/edit-rack', rackController.updateRack);
+router.delete('/delete-rack/:id', rackController.deleteRack);
 
-// Item
-router.post('/item/add', itemController.addItem);
-router.get('/item/get-all', itemController.getAllItem);
-router.get('/item/get/:id', itemController.getAItem)
-router.put('/item/update/:id',itemController.updateItem)
-router.delete('/item/delete/:id',itemController.deleteItem)
 
 //manufacturer
 router.post('/addManufacturer', manufacturerController.addManufacturer);
@@ -44,7 +47,7 @@ router.get('/getAllManufacturer', manufacturerController.getAllManufacturer)
 router.get('/getAManufacturer/:id',manufacturerController.getAManufacturer)
 router.put('/updateManufacturer/:id', manufacturerController.updateManufacturer)
 router.delete('/deleteManufacturer/:id',manufacturerController.deletedManufacturer)
->>>>>>> 621997b016de2967174a98f8ea38c0c4242b1c8a
+
 
 
 module.exports = router
