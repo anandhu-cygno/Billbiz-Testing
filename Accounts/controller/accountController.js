@@ -42,6 +42,7 @@ exports.addAccount = async (req, res) => {
       return res.status(400).json({
         message: "Invalid account group, head, or subhead."
       });
+      console.log("Invalid account group, head, or subhead.");
     }
 
 
@@ -50,6 +51,7 @@ exports.addAccount = async (req, res) => {
       return res.status(400).json({
         message: "Bank Details (Account Number, IFSC, Currency) are required"
       });
+      console.log("Bank Details (Account Number, IFSC, Currency) are required");
     }
 
     // Find the account by accountId and organizationId
