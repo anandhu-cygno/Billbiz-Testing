@@ -47,6 +47,12 @@ exports.addCustomer = async (req, res) => {
             remark
         } = req.body;
 
+        const currentDate = new Date();
+        const day = String(currentDate.getDate()).padStart(2, '0');
+        const month = String(currentDate.getMonth() + 1).padStart(2, '0'); 
+        const year = currentDate.getFullYear();
+        const formattedDate = `${day}-${month}-${year}`;
+
         // Validate organizationId
         const organizationExists = await Organization.findOne({ organizationId:organizationId });
         if (!organizationExists) {
@@ -116,6 +122,46 @@ exports.addCustomer = async (req, res) => {
             message: "Customer created successfully.",
         });
         console.log("Customer created successfully:");
+
+
+        // Check if an organization with the same organizationName already exists
+      const existingAccount = await Account.findOne({
+        accountName: firstName+" "+lastName,
+        organizationId: organizationId,
+    });
+  
+      if (existingAccount) {
+        return res.status(409).json({
+          message: "Account with the provided Account Name already exists.",
+        });
+      }
+  
+      // Create a new Customer Account
+      const newAccount = new Account({
+        organizationId,
+        accountName: firstName+" "+lastName,
+        accountCode,
+
+        accountSubhead:"Sundry Debtors",
+        accountHead:"Asset",
+        accountGroup:"Asset",
+
+        openingBalance:openingBalence,
+        openingBalanceDate:formattedDate,
+        description,
+        bankAccNum,
+        bankIfsc,
+        bankCurrency,        
+      });
+  
+      
+      await newAccount.save();
+  
+      
+      res.status(201).json({
+        message: "Customer Account created successfully."
+      });
+      console.log("Customer Account created successfully:");
     } catch (error) {
         console.error("Error creating customer:", error);
         res.status(500).json({ message: "Internal server error." });
