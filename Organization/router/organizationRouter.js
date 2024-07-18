@@ -13,7 +13,7 @@ router.post('/setup-organization',organizationController.setupOrganization)
 
 router.get('/get-additional-data',organizationController.getAdditionalData)
 
-router.get('/get-one-organization/:organizationId',organizationController.getOneOrganization)
+router.put('/get-one-organization',organizationController.getOneOrganization)
 
 // router.put('/edit-organization/:id',organizationController.updateOrganization)
 
