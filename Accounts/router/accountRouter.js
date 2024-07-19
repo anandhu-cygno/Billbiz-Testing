@@ -12,13 +12,13 @@ const journalController = require("../controller/journalController")
 
 router.post('/add-account',accountController.addAccount)
 
-router.get('/get-all-account',accountController.getAllAccount)
+router.put('/get-all-account',accountController.getAllAccount)
 
-router.get('/get-one-account/:id',accountController.getOneAccount)
+router.put('/get-one-account/:accountId',accountController.getOneAccount)
 
-router.put('/edit-account/:id',accountController.editAccount)
+router.put('/edit-account/:accountId',accountController.editAccount)
 
-router.put('/delete-account/:id',accountController.deleteAccount)
+router.put('/delete-account/:accountId',accountController.deleteAccount)
 
 
 

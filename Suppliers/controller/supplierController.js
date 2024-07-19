@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 const Organization = require("../database/model/organization");
 const Supplier = require("../database/model/supplier");
 const Account = require("../../Accounts/database/model/account");
@@ -334,6 +335,141 @@ exports.addSupplier = async (req, res) => {
       res.status(500).json({ message: "Internal server error." });
     }
   }
+=======
+const Supplier = require("../database/model/supplier");
+
+exports.addSupplier = async (req, res) => {
+    console.log("add supplier:", req.body);
+    const {
+        organizationId,
+        accountId,
+        salutation,
+        firstName,
+        lastName,
+        companyName,
+        supplierEmail,
+        workPhone,
+        mobile,
+        gstNo,
+        balance,
+        creditDays,
+        creditLimit,
+        interestPercentage,
+        discountPercentage,
+        pan,
+        currency,
+        openingBalance,
+        paymentTerms,
+        tds,
+        uploadFiles,
+        websiteUrl,
+        department,
+        designation,
+        twitter,
+        skypeName,
+        facebook,
+        billingAttention,
+        billingCountry,
+        billingAddress,
+        billingCity,
+        billingState,
+        billingPinCode,
+        billingPhone,
+        billingFaxNum,
+        shippingAttention,
+        shippingCountry,
+        shippingAddress,
+        shippingCity,
+        shippingState,
+        shippingPinCode,
+        shippingPhone,
+        shippingFaxNum,
+        remarks
+    } = req.body;
+
+    try {
+        // Check if a supplier with the same organizationId already exists
+        const existingSupplierById = await Supplier.findOne({ organizationId });
+
+        if (existingSupplierById) {
+            console.log("Supplier with this organizationId already exists:", existingSupplierById);
+            return res.status(409).json({
+                message: "A supplier with this organizationId already exists in the given organization.",
+            });
+        }
+
+        // Check if a supplier with the same companyName already exists within the same organization
+        const existingSupplierByName = await Supplier.findOne({ companyName, organizationId });
+
+        if (existingSupplierByName) {
+            console.log("Supplier with companyName already exists:", existingSupplierByName);
+            return res.status(409).json({
+                message: "A supplier with this companyName already exists in the given organization.",
+            });
+        }
+
+        const currentDate = new Date();
+        const formattedDate = currentDate.toISOString().split('T')[0];
+
+        // Create a new supplier
+        const newSupplier = new Supplier({
+            organizationId,
+            accountId,
+            createdDate: formattedDate,
+            salutation,
+            firstName,
+            lastName,
+            companyName,
+            supplierEmail,
+            workPhone,
+            mobile,
+            gstNo,
+            balance,
+            creditDays,
+            creditLimit,
+            interestPercentage,
+            discountPercentage,
+            pan,
+            currency,
+            openingBalance,
+            paymentTerms,
+            tds,
+            uploadFiles,
+            websiteUrl,
+            department,
+            designation,
+            twitter,
+            skypeName,
+            facebook,
+            billingAttention,
+            billingCountry,
+            billingAddress,
+            billingCity,
+            billingState,
+            billingPinCode,
+            billingPhone,
+            billingFaxNum,
+            shippingAttention,
+            shippingCountry,
+            shippingAddress,
+            shippingCity,
+            shippingState,
+            shippingPinCode,
+            shippingPhone,
+            shippingFaxNum,
+            remarks
+        });
+
+        // Save the supplier to the database
+        const savedSupplier = await newSupplier.save();
+
+        // Send response
+        res.status(201).json(savedSupplier);
+    } catch (error) {
+        console.error("Error adding supplier:", error);
+        res.status(400).json({ error: error.message });
+    }
+>>>>>>> bf9a6eb82eee609d60055131934b0d43c2b79bb5
 };
 
 exports.getAllSuppliers = async (req, res) => {
@@ -346,7 +482,11 @@ exports.getAllSuppliers = async (req, res) => {
         res.status(500).json({ message: "Internal server error." });
     }
 };
+<<<<<<< HEAD
  
+=======
+
+>>>>>>> bf9a6eb82eee609d60055131934b0d43c2b79bb5
 exports.getASupplier = async (req, res) => {
     const supplierId = req.params.id;
     try {
@@ -360,10 +500,17 @@ exports.getASupplier = async (req, res) => {
         res.status(500).json({ message: "Internal server error." });
     }
 };
+<<<<<<< HEAD
  
 exports.updateSupplier = async (req, res) => {
     console.log("Received request to update supplier:", req.body);
    
+=======
+
+exports.updateSupplier = async (req, res) => {
+    console.log("Received request to update supplier:", req.body);
+    
+>>>>>>> bf9a6eb82eee609d60055131934b0d43c2b79bb5
     try {
         const supplierId = req.params.id;
         const {
@@ -377,9 +524,17 @@ exports.updateSupplier = async (req, res) => {
             workPhone,
             mobile,
             gstNo,
+<<<<<<< HEAD
             creditDays,
             creditLimit,
             interestPercentage,
+=======
+            balance,
+            creditDays,
+            creditLimit,
+            interestPercentage,
+            discountPercentage,
+>>>>>>> bf9a6eb82eee609d60055131934b0d43c2b79bb5
             pan,
             currency,
             openingBalance,
@@ -412,6 +567,7 @@ exports.updateSupplier = async (req, res) => {
             lastModifiedDate
         } = req.body;
 
+<<<<<<< HEAD
         // Find the supplier by its ID to get the current supplier
         const currentSupplier = await Supplier.findById(_id);
 
@@ -435,6 +591,11 @@ exports.updateSupplier = async (req, res) => {
         const currentDate = new Date();
         const formattedDate = currentDate.toISOString().split('T')[0];
  
+=======
+        const currentDate = new Date();
+        const formattedDate = currentDate.toISOString().split('T')[0];
+
+>>>>>>> bf9a6eb82eee609d60055131934b0d43c2b79bb5
         const updatedSupplier = await Supplier.findByIdAndUpdate(
             supplierId,
             {
@@ -448,9 +609,17 @@ exports.updateSupplier = async (req, res) => {
                 workPhone,
                 mobile,
                 gstNo,
+<<<<<<< HEAD
                 creditDays,
                 creditLimit,
                 interestPercentage,
+=======
+                balance,
+                creditDays,
+                creditLimit,
+                interestPercentage,
+                discountPercentage,
+>>>>>>> bf9a6eb82eee609d60055131934b0d43c2b79bb5
                 pan,
                 currency,
                 openingBalance,
@@ -484,12 +653,20 @@ exports.updateSupplier = async (req, res) => {
             },
             { new: true, runValidators: true }
         );
+<<<<<<< HEAD
  
+=======
+
+>>>>>>> bf9a6eb82eee609d60055131934b0d43c2b79bb5
         if (!updatedSupplier) {
             console.log("Supplier not found with ID:", supplierId);
             return res.status(404).json({ message: "Supplier not found" });
         }
+<<<<<<< HEAD
  
+=======
+
+>>>>>>> bf9a6eb82eee609d60055131934b0d43c2b79bb5
         res.status(200).json({ message: "Supplier updated successfully", supplier: updatedSupplier });
         console.log("Supplier updated successfully:", updatedSupplier);
     } catch (error) {
@@ -497,6 +674,7 @@ exports.updateSupplier = async (req, res) => {
         res.status(500).json({ message: "Internal server error" });
     }
 };
+<<<<<<< HEAD
  
 exports.deleteSupplier = async (req, res) => {
     try {
@@ -510,12 +688,28 @@ exports.deleteSupplier = async (req, res) => {
  
         await Supplier.findByIdAndDelete(id);
  
+=======
+
+exports.deleteSupplier = async (req, res) => {
+    try {
+        const { id } = req.params;
+
+        const supplier = await Supplier.findById(id);
+
+        if (!supplier) {
+            return res.status(404).json({ message: "Supplier not found." });
+        }
+
+        await Supplier.findByIdAndDelete(id);
+
+>>>>>>> bf9a6eb82eee609d60055131934b0d43c2b79bb5
         res.status(200).json({ message: "Supplier deleted successfully." });
         console.log("Supplier deleted successfully:", id);
     } catch (error) {
         console.error("Error deleting supplier:", error);
         res.status(500).json({ message: "Internal server error." });
     }
+<<<<<<< HEAD
 };
 
 
@@ -580,3 +774,6 @@ exports.addContactPersons = async (req, res) => {
       res.status(500).json({ message: "Internal server error." });
     }
   };
+=======
+};
+>>>>>>> bf9a6eb82eee609d60055131934b0d43c2b79bb5
