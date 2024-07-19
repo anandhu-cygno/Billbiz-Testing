@@ -143,7 +143,6 @@ exports.getAllSuppliers = async (req, res) => {
         res.status(500).json({ message: "Internal server error." });
     }
 };
-
 exports.getASupplier = async (req, res) => {
     const supplierId = req.params.id;
     try {
@@ -265,12 +264,10 @@ exports.updateSupplier = async (req, res) => {
             },
             { new: true, runValidators: true }
         );
-
         if (!updatedSupplier) {
             console.log("Supplier not found with ID:", supplierId);
             return res.status(404).json({ message: "Supplier not found" });
         }
-
         res.status(200).json({ message: "Supplier updated successfully", supplier: updatedSupplier });
         console.log("Supplier updated successfully:", updatedSupplier);
     } catch (error) {
