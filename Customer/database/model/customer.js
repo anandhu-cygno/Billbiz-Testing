@@ -33,7 +33,7 @@ const customerSchema = new Schema({
     //Other Details
     pan: {type:String},
     currency: {type:String},
-    openingBalence: {type:String},
+    openingBalance: {type:String},
     paymentTerms: {type:String},
     documents: {type:String},
 

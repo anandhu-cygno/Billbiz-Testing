@@ -19,7 +19,7 @@ exports.addCustomer = async (req, res) => {
       cardNumber,
       pan,
       currency,
-      openingBalence,
+      openingBalance,
       paymentTerms,
       documents,
       websiteURL,
@@ -90,7 +90,7 @@ exports.addCustomer = async (req, res) => {
       cardNumber,
       pan,
       currency,
-      openingBalence,
+      openingBalance,
       paymentTerms,
       documents,
       websiteURL,
@@ -146,7 +146,7 @@ exports.addCustomer = async (req, res) => {
       accountHead: "Asset",
       accountGroup: "Asset",
 
-      openingBalance: openingBalence,
+      openingBalance: openingBalance,
       openingBalanceDate: formattedDate,
       description:"Customer"
     });
@@ -229,7 +229,7 @@ exports.editCustomer = async (req, res) => {
       cardNumber,
       pan,
       currency,
-      openingBalence,
+      openingBalance,
       paymentTerms,
       documents,
       websiteURL,
@@ -291,7 +291,7 @@ exports.editCustomer = async (req, res) => {
     customer.cardNumber = cardNumber || customer.cardNumber;
     customer.pan = pan || customer.pan;
     customer.currency = currency || customer.currency;
-    customer.openingBalence = openingBalence || customer.openingBalence;
+    customer.openingBalance = openingBalance || customer.openingBalance;
     customer.paymentTerms = paymentTerms || customer.paymentTerms;
     customer.documents = documents || customer.documents;
     customer.websiteURL = websiteURL || customer.websiteURL;
