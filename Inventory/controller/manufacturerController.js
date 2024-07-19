@@ -9,7 +9,6 @@ exports.addManufacturer = async (req, res) => {
         name,
         description,
         createdDate,
-        updatedDate
         
     } = req.body;
 
@@ -33,14 +32,19 @@ exports.addManufacturer = async (req, res) => {
                 message: "A manufacturer with this name already exists in the given organization.",
             });
         }
+        const currentDate = new Date();
+      const day = String(currentDate.getDate()).padStart(2, '0');
+      const month = String(currentDate.getMonth() + 1).padStart(2, '0'); 
+      const year = currentDate.getFullYear();
+      const formattedDate = `${day}-${month}-${year}`;
 
         // Create a new manufacturer
         const newManufacturer = new manufacturer({
             organizationId,
             name,
             description,
-            createdDate,
-            updatedDate
+            createdDate:formattedDate
+            
         });
 
         // Save the manufacturer to the database
@@ -90,7 +94,6 @@ exports.updateManufacturer = async (req, res) => {
             organizationId,
             name,
             description,
-            createdDate,
             updatedDate,
         } = req.body;
 
@@ -118,6 +121,12 @@ exports.updateManufacturer = async (req, res) => {
             }
         }
 
+        const currentDate = new Date();
+      const day = String(currentDate.getDate()).padStart(2, '0');
+      const month = String(currentDate.getMonth() + 1).padStart(2, '0'); 
+      const year = currentDate.getFullYear();
+      const formattedDate = `${day}-${month}-${year}`;
+
         // Update the manufacturer
         const updatedManufacturer = await manufacturer.findByIdAndUpdate(
             manufacturerId,
@@ -125,8 +134,7 @@ exports.updateManufacturer = async (req, res) => {
                 organizationId,
                 name,
                 description,
-                createdDate,
-                updatedDate,
+                updatedDate:formattedDate
             },
             { new: true, runValidators: true }
         );
