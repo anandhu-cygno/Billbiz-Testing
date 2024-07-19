@@ -36,7 +36,7 @@ const supplierSchema = new Schema({
     openingBalance:{type:String},
     paymentTerms:{type:String},
     tds: {type:String},
-    uploadFiles: {type:String},
+    uploadFiles: [],
     wedsiteUrl: {type:String},
     department: {type:String},
     designation: {type:String},

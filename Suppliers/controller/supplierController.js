@@ -1,10 +1,10 @@
 const Supplier = require("../database/model/supplier");
+const Account = require("../database/model/account");
 
 exports.addSupplier = async (req, res) => {
     console.log("add supplier:", req.body);
     const {
         organizationId,
-        accountId,
         salutation,
         firstName,
         lastName,
@@ -50,33 +50,30 @@ exports.addSupplier = async (req, res) => {
     } = req.body;
 
     try {
-        // Check if a supplier with the same organizationId already exists
-        const existingSupplierById = await Supplier.findOne({ organizationId });
 
-        if (existingSupplierById) {
-            console.log("Supplier with this organizationId already exists:", existingSupplierById);
+         // Check if a supplier with the same organizationId already exists
+        const existingSupplier = await Supplier.findOne({
+            supplierEmail: supplierEmail,
+            organizationId: organizationId,
+          });
+          if (existingSupplier) {
             return res.status(409).json({
-                message: "A supplier with this organizationId already exists in the given organization.",
+              message: "Supplier with the provided email already exists.",
             });
-        }
+          }      
+        
 
-        // Check if a supplier with the same companyName already exists within the same organization
-        const existingSupplierByName = await Supplier.findOne({ companyName, organizationId });
 
-        if (existingSupplierByName) {
-            console.log("Supplier with companyName already exists:", existingSupplierByName);
-            return res.status(409).json({
-                message: "A supplier with this companyName already exists in the given organization.",
-            });
-        }
 
-        const currentDate = new Date();
-        const formattedDate = currentDate.toISOString().split('T')[0];
+          const currentDate = new Date();
+          const day = String(currentDate.getDate()).padStart(2, "0");
+          const month = String(currentDate.getMonth() + 1).padStart(2, "0");
+          const year = currentDate.getFullYear();
+          const formattedDate = `${day}-${month}-${year}`;
 
         // Create a new supplier
         const newSupplier = new Supplier({
             organizationId,
-            accountId,
             createdDate: formattedDate,
             salutation,
             firstName,
@@ -123,10 +120,39 @@ exports.addSupplier = async (req, res) => {
         });
 
         // Save the supplier to the database
-        const savedSupplier = await newSupplier.save();
+        await newSupplier.save();
 
-        // Send response
-        res.status(201).json(savedSupplier);
+        const existingAccount = await Account.findOne({
+            accountName: companyName,
+            organizationId: organizationId,
+          });
+      
+          if (existingAccount) {
+            return res.status(409).json({
+              message: "Account with the provided Account Name already exists.",
+            });
+          }
+      
+          // Create a new Customer Account
+          const newAccount = new Account({
+            organizationId,
+            accountName: companyName,
+      
+            accountSubhead: "Sundry Creditors",
+            accountHead: "Liabilities",
+            accountGroup: "Liability",
+      
+            openingBalance: openingBalance,
+            openingBalanceDate: formattedDate,
+            description:"Suppliers"
+          });
+      
+          await newAccount.save();
+          res.status(201).json({
+            message: "Supplier Account created successfully.",
+          });
+          console.log("Supplier Account created successfully");
+
     } catch (error) {
         console.error("Error adding supplier:", error);
         res.status(400).json({ error: error.message });
