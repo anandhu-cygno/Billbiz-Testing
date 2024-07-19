@@ -7,8 +7,7 @@ exports.addBrand = async (req, res) => {
         organizationId,
         name,
         description,
-        createdDate,
-        updatedDate
+        createdDate
     } = req.body;
 
     try {
@@ -22,13 +21,18 @@ exports.addBrand = async (req, res) => {
             });
         }
 
+        const currentDate = new Date();
+      const day = String(currentDate.getDate()).padStart(2, '0');
+      const month = String(currentDate.getMonth() + 1).padStart(2, '0'); 
+      const year = currentDate.getFullYear();
+      const formattedDate = `${day}-${month}-${year}`;
+
         // Create a new brand
         const newBrand = new Brand({
             organizationId,
             name,
             description,
-            createdDate,
-            updatedDate
+            createdDate:formattedDate
         });
 
         // Save the brand to the database
@@ -79,8 +83,7 @@ exports.updateBrand = async (req, res) => {
             organizationId,
             name,
             description,
-            createdDate,
-            updatedDate,
+            updatedDate
         } = req.body;
 
         // Find the current brand by its ID
@@ -107,6 +110,11 @@ exports.updateBrand = async (req, res) => {
             }
         }
 
+        const currentDate = new Date();
+      const day = String(currentDate.getDate()).padStart(2, '0');
+      const month = String(currentDate.getMonth() + 1).padStart(2, '0'); 
+      const year = currentDate.getFullYear();
+      const formattedDate = `${day}-${month}-${year}`;
         // Update the brand
         const updatedBrand = await Brand.findByIdAndUpdate(
             brandId,
@@ -114,8 +122,7 @@ exports.updateBrand = async (req, res) => {
                 organizationId,
                 name,
                 description,
-                createdDate,
-                updatedDate,
+                updatedDate:formattedDate
             },
             { new: true, runValidators: true }
         );

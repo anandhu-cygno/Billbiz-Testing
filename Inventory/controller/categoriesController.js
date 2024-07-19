@@ -9,7 +9,6 @@ exports.addCategory = async (req, res) => {
         name,
         description,
         createdDate,
-        updatedDate
     } = req.body;
 
     try {
@@ -23,13 +22,19 @@ exports.addCategory = async (req, res) => {
             });
         }
 
+        const currentDate = new Date();
+        const day = String(currentDate.getDate()).padStart(2, '0');
+        const month = String(currentDate.getMonth() + 1).padStart(2, '0'); 
+        const year = currentDate.getFullYear();
+        const formattedDate = `${day}-${month}-${year}`;
+
         // Create a new category
         const newCategory = new Categories({
             organizationId,
             name,
             description,
-            createdDate,
-            updatedDate
+            createdDate:formattedDate
+            
         });
 
         // Save the category to the database
@@ -80,7 +85,6 @@ exports.updateCategory = async (req, res) => {
             organizationId,
             name,
             description,
-            createdDate,
             updatedDate,
         } = req.body;
 
@@ -108,6 +112,12 @@ exports.updateCategory = async (req, res) => {
             }
         }
 
+        const currentDate = new Date();
+      const day = String(currentDate.getDate()).padStart(2, '0');
+      const month = String(currentDate.getMonth() + 1).padStart(2, '0'); 
+      const year = currentDate.getFullYear();
+      const formattedDate = `${day}-${month}-${year}`;
+
         // Update the category
         const updatedCategory = await Categories.findByIdAndUpdate(
             categoryId,
@@ -115,8 +125,7 @@ exports.updateCategory = async (req, res) => {
                 organizationId,
                 name,
                 description,
-                createdDate,
-                updatedDate,
+                updatedDate:formattedDate
             },
             { new: true, runValidators: true }
         );
