@@ -113,10 +113,10 @@ exports.updateUnit = async (req, res) => {
     // Find the unit by its ID to get the current unitName
     const currentUnit = await Unit.findById(_id);
 
-    if (!currentUnit) {
-      console.log("Unit not found with ID:", _id);
-      return res.status(404).json({ message: "Unit not found" });
-    }
+    // if (!currentUnit) {
+    //   console.log("Unit not found with ID:", _id);
+    //   return res.status(404).json({ message: "Unit not found" });
+    // }
 
     // Check if the new unitName already exists in the same organizationId, excluding the current unit being updated
     if (currentUnit.unitName !== unitName) {
@@ -344,8 +344,6 @@ exports.updateUnitConversion = async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 };
-
-
 
 
 //1.5. delete Unit conversion
